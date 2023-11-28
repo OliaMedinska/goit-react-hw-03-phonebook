@@ -16,6 +16,15 @@ class App extends Component {
     filter: ''
     }
 
+componentDidUpdate (prevState) {
+  if (prevState.contacts !== this.state.contacts) {
+    localStorage.setItem(
+      'contacts',
+      JSON.stringify(this.state.contacts)
+    );
+  }
+}
+
 formSubmitHandler = ({name, number}) => {
 
 if (this.checkContactName(name)) {
