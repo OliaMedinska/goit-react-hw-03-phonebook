@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import Form from './Form/Form';
 import Contact from "./Contact/Contact";
 import Filter from "./Filter/Filter";
-import React, { Component } from "react";
+import { Component } from "react";
 
 class App extends Component {
   state = {
@@ -16,12 +16,19 @@ class App extends Component {
     filter: ''
     }
 
-componentDidUpdate (prevState) {
+componentDidUpdate(prevProps, prevState) {
   if (prevState.contacts !== this.state.contacts) {
-    localStorage.setItem(
+    window.localStorage.setItem(
       'contacts',
-      JSON.stringify(this.state.contacts)
+      JSON.stringify({ contacts: this.state.contacts })
     );
+  }
+}
+
+componentDidMount() {
+  const savedContacts = JSON.parse(window.localStorage.getItem('contacts'));
+  if (savedContacts) {
+    this.setState({ contacts: savedContacts.contacts });
   }
 }
 
